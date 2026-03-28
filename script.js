@@ -157,37 +157,31 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// --- Gallery tabs (Photos / Videos) ---
-const galleryTabs = document.querySelectorAll('.gallery-tab');
-const galleryPanels = document.querySelectorAll('.gallery-panel');
-
-galleryTabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    galleryTabs.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-
-    const target = tab.dataset.tab;
-    galleryPanels.forEach(panel => {
-      panel.classList.remove('active');
-      if (panel.id === `gallery-${target}`) {
-        panel.classList.add('active');
-      }
-    });
-  });
-});
-
 // --- Video play on click (for self-hosted videos) ---
 document.querySelectorAll('.reel-video-wrapper, .gallery-video-wrapper').forEach(wrapper => {
+  const video = wrapper.querySelector('video');
+  if (!video) return;
+
+  // Add play overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'video-play-overlay';
+  overlay.innerHTML = '<div class="reel-play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>';
+  wrapper.appendChild(overlay);
+
   wrapper.addEventListener('click', () => {
-    const video = wrapper.querySelector('video');
-    if (video) {
-      if (video.paused) {
-        video.play();
-        wrapper.classList.add('playing');
-      } else {
-        video.pause();
-        wrapper.classList.remove('playing');
-      }
+    if (video.paused) {
+      // Pause all other videos first
+      document.querySelectorAll('.reel-video-wrapper video, .gallery-video-wrapper video').forEach(v => {
+        if (v !== video) {
+          v.pause();
+          v.parentElement.classList.remove('playing');
+        }
+      });
+      video.play();
+      wrapper.classList.add('playing');
+    } else {
+      video.pause();
+      wrapper.classList.remove('playing');
     }
   });
 });
