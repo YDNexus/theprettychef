@@ -69,7 +69,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Apply fade-in to sections
-document.querySelectorAll('.section-header, .about-grid, .menu-card, .testimonial-card, .service-card, .gallery-item, .contact-grid, .big-quote-content').forEach(el => {
+document.querySelectorAll('.section-header, .about-grid, .menu-card, .testimonial-card, .service-card, .gallery-item, .gallery-video-item, .reel-card, .contact-grid, .big-quote-content').forEach(el => {
   el.classList.add('fade-in');
   fadeObserver.observe(el);
 });
@@ -153,6 +153,41 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const target = document.querySelector(anchor.getAttribute('href'));
     if (target) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// --- Gallery tabs (Photos / Videos) ---
+const galleryTabs = document.querySelectorAll('.gallery-tab');
+const galleryPanels = document.querySelectorAll('.gallery-panel');
+
+galleryTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    galleryTabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    const target = tab.dataset.tab;
+    galleryPanels.forEach(panel => {
+      panel.classList.remove('active');
+      if (panel.id === `gallery-${target}`) {
+        panel.classList.add('active');
+      }
+    });
+  });
+});
+
+// --- Video play on click (for self-hosted videos) ---
+document.querySelectorAll('.reel-video-wrapper, .gallery-video-wrapper').forEach(wrapper => {
+  wrapper.addEventListener('click', () => {
+    const video = wrapper.querySelector('video');
+    if (video) {
+      if (video.paused) {
+        video.play();
+        wrapper.classList.add('playing');
+      } else {
+        video.pause();
+        wrapper.classList.remove('playing');
+      }
     }
   });
 });
