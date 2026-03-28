@@ -681,16 +681,28 @@ img {
   text-transform: uppercase;
 }
 
-.vegan-tag {
-  background: rgba(138, 154, 123, 0.15);
-  color: var(--color-sage);
-  border: 1px solid rgba(138, 154, 123, 0.3);
+.entree-tag {
+  background: rgba(200, 149, 108, 0.15);
+  color: var(--color-accent);
+  border: 1px solid rgba(200, 149, 108, 0.3);
 }
 
-.veg-tag {
+.seafood-tag {
+  background: rgba(108, 160, 200, 0.15);
+  color: #6ca0c8;
+  border: 1px solid rgba(108, 160, 200, 0.3);
+}
+
+.comfort-tag {
   background: rgba(212, 168, 83, 0.15);
   color: var(--color-gold);
   border: 1px solid rgba(212, 168, 83, 0.3);
+}
+
+.dessert-tag {
+  background: rgba(201, 123, 132, 0.15);
+  color: var(--color-rose);
+  border: 1px solid rgba(201, 123, 132, 0.3);
 }
 
 /* ============================================
